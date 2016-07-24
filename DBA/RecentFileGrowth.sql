@@ -1,11 +1,9 @@
-/*
--------------------------------------------------------------------------------------------------
-        NAME: INS_RecentFileGrowth.sql
+/*-------------------------------------------------------------------------------------------------
+        NAME: RecentFileGrowth.sql
  MODIFIED BY: Sal Young
        EMAIL: saleyoun@yahoo.com
  DESCRIPTION: Displays information about database files growth events
 -------------------------------------------------------------------------------------------------
-     HISTORY:
          DATE MODIFIED      DESCRIPTION   
 -------------------------------------------------------------------------------------------------
    02.12.2012 SYoung        Initial creation.
@@ -13,13 +11,12 @@
   DISCLAIMER: The AUTHOR  ASSUMES NO RESPONSIBILITY  FOR ANYTHING, including  the destruction of 
               personal property, creating singularities, making deep fried chicken, causing your 
               toilet to  explode, making  your animals spin  around like mad, causing hair loss, 
-			        killing your buzz or ANYTHING else that can be thought up.
+              killing your buzz or ANYTHING else that can be thought up.
 -------------------------------------------------------------------------------------------------
 */
 IF(SELECT CONVERT(int,value_in_use) FROM sys.configurations WHERE [name] = 'default trace enabled' ) = 1
 
-BEGIN
-  
+BEGIN  
    DECLARE @curr_tracefilename varchar(500)
          , @base_tracefilename varchar(500)
          , @indx int;

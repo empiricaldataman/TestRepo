@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------------------------------
-        NAME: iTableDiff_Gen.sql
+        NAME: TableDiff_Gen.sql
  MODIFIED BY: Sal Young
        EMAIL: saleyoun@yahoo.com
  DESCRIPTION: Generate a tablediff.exe command. The query window must be running in SQLCMD mode.
