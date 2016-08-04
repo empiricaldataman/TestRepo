@@ -1,4 +1,5 @@
-/*-------------------------------------------------------------------------------------------------
+/*
+-------------------------------------------------------------------------------------------------
         NAME: Read_Default_Trace.sql
  MODIFIED BY: Sal Young
        EMAIL: saleyoun@yahoo.com
@@ -13,7 +14,8 @@
               personal property, creating singularities, making deep fried chicken, causing your 
               toilet to  explode, making  your animals spin  around like mad, causing hair loss, 
               killing your buzz or ANYTHING else that can be thought up.
--------------------------------------------------------------------------------------------------*/
+-------------------------------------------------------------------------------------------------
+*/
 SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
 DECLARE @path varchar(256)

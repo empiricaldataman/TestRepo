@@ -12,7 +12,8 @@
               personal property, creating singularities, making deep fried chicken, causing your 
               toilet to  explode, making  your animals spin  around like mad, causing hair loss, 
               killing your buzz or ANYTHING else that can be thought up.
--------------------------------------------------------------------------------------------------*/
+-------------------------------------------------------------------------------------------------
+*/
 IF(SELECT CONVERT(int,value_in_use) FROM sys.configurations WHERE [name] = 'default trace enabled' ) = 1
 
 BEGIN  
