@@ -1,5 +1,5 @@
 /*-------------------------------------------------------------------------------------------------
-        NAME: RecentFileGrowth.sql
+        NAME: DatabaseRecentFileGrowth.sql
  MODIFIED BY: Sal Young
        EMAIL: saleyoun@yahoo.com
  DESCRIPTION: Displays information about database files growth events
@@ -11,12 +11,15 @@
   DISCLAIMER: The AUTHOR  ASSUMES NO RESPONSIBILITY  FOR ANYTHING, including  the destruction of 
               personal property, creating singularities, making deep fried chicken, causing your 
               toilet to  explode, making  your animals spin  around like mad, causing hair loss, 
-              killing your buzz or ANYTHING else that can be thought up.
--------------------------------------------------------------------------------------------------
-*/
+			        killing your buzz or ANYTHING else that can be thought up.
+-------------------------------------------------------------------------------------------------*/
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+
+SET NOCOUNT ON
+
 IF(SELECT CONVERT(int,value_in_use) FROM sys.configurations WHERE [name] = 'default trace enabled' ) = 1
 
-BEGIN  
+BEGIN
    DECLARE @curr_tracefilename varchar(500)
          , @base_tracefilename varchar(500)
          , @indx int;
@@ -43,6 +46,5 @@ BEGIN
      WHERE EventClass >= 92
        AND EventClass <= 95
      ORDER BY StartTime DESC;
-
 END
 GO

@@ -1,9 +1,12 @@
 /*-------------------------------------------------------------------------------------------------
-        NAME: sp_who2_Filtered.sql
+        NAME: ShowStats.sql
  MODIFIED BY: Sal Young
        EMAIL: saleyoun@yahoo.com
- DESCRIPTION: 
+ DESCRIPTION: DBCC SHOW_STATISTICS displays current query optimization statistics for a table or 
+              indexed view.
+              http://msdn.microsoft.com/en-us/library/ms174384.aspx
 -------------------------------------------------------------------------------------------------
+     HISTORY:
          DATE MODIFIED      DESCRIPTION   
 -------------------------------------------------------------------------------------------------
    02.12.2012 SYoung        Initial creation.
@@ -11,41 +14,13 @@
   DISCLAIMER: The AUTHOR  ASSUMES NO RESPONSIBILITY  FOR ANYTHING, including  the destruction of 
               personal property, creating singularities, making deep fried chicken, causing your 
               toilet to  explode, making  your animals spin  around like mad, causing hair loss, 
-              killing your buzz or ANYTHING else that can be thought up.
+			        killing your buzz or ANYTHING else that can be thought up.
 -------------------------------------------------------------------------------------------------*/
+:CONNECT <server_name, sysname, SQL_Server_Instance>
+
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+
 SET NOCOUNT ON
 
-DECLARE @Login SYSNAME 
-SET @Login = ''
-
-DECLARE @Who2 TABLE (
-        SPID INT,  
-        [Status] VARCHAR(1000) NULL,  
-        [Login] SYSNAME NULL,  
-        HostName SYSNAME NULL,  
-        BlkBy SYSNAME NULL,  
-        DBName SYSNAME NULL,  
-        Command VARCHAR(1000) NULL,  
-        CPUTime INT NULL,  
-        DiskIO INT NULL,  
-        LastBatch VARCHAR(1000) NULL,  
-        ProgramName VARCHAR(1000) NULL,  
-        SPID2 INT,
-        REQUESTID INT) 
-
-INSERT INTO @Who2
-EXEC sp_who2 active;
-
-SELECT SPID
-     , HostName
-     , [Login]
-     , BlkBy
-     , DBName
-     , Command
-     , CPUTime
-     , DiskIO
-     , LastBatch
-     , ProgramName
-  FROM @Who2
- WHERE Login = @Login;
+DBCC SHOW_STATISTICS ("ApplicationSnapshotApplicant", ix_ApplicationSnapshotApplicant_dModified_cSocialSecurityNumber)
 GO
