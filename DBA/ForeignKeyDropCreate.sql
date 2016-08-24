@@ -37,24 +37,24 @@ BEGIN
   DECLARE @value varchar(max)
   ;
 IF @PC = 'F'  
-  WITH FKey
-    AS (SELECT i2.TABLE_CATALOG
+   WITH FKey
+     AS (SELECT i2.TABLE_CATALOG
               , i2.TABLE_SCHEMA
               , i2.TABLE_NAME
               , i2.COLUMN_NAME
               , i2.ORDINAL_POSITION
               , i1.CONSTRAINT_NAME
-          FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS i1
-        INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE i2 ON i1.CONSTRAINT_NAME = i2.CONSTRAINT_NAME
-        WHERE i1.CONSTRAINT_TYPE = 'FOREIGN KEY'
-          AND i1.CONSTRAINT_NAME = @FKName)
+           FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS i1
+          INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE i2 ON i1.CONSTRAINT_NAME = i2.CONSTRAINT_NAME
+          WHERE i1.CONSTRAINT_TYPE = 'FOREIGN KEY'
+            AND i1.CONSTRAINT_NAME = @FKName)
       , FKColumns
-      AS (SELECT ORDINAL_POSITION
+     AS (SELECT ORDINAL_POSITION
               , STUFF((SELECT '], [' + COLUMN_NAME 
                           FROM FKey
-                        ORDER BY ORDINAL_POSITION
-                          FOR XML PATH(''), TYPE).value('.','varchar(max)'),1,2,'') +']'  [COLUMN_LIST]
-            FROM FKey)
+                         ORDER BY ORDINAL_POSITION
+                           FOR XML PATH(''), TYPE).value('.','varchar(max)'),1,2,'') +']'  [COLUMN_LIST]
+           FROM FKey)
   
   SELECT @value = LTRIM(COLUMN_LIST)
     FROM FKey
