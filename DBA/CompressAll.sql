@@ -12,7 +12,7 @@
   DISCLAIMER: The AUTHOR  ASSUMES NO RESPONSIBILITY  FOR ANYTHING, including  the destruction of 
               personal property, creating singularities, making deep fried chicken, causing your 
               toilet to  explode, making  your animals spin  around like mad, causing hair loss, 
-			        killing your buzz or ANYTHING else that can be thought up.
+              killing your buzz or ANYTHING else that can be thought up.
 -------------------------------------------------------------------------------------------------*/
 SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
@@ -21,27 +21,27 @@ SET NOCOUNT ON
 DECLARE @TSQL varchar(1000)
       , @schema varchar(128)
       , @tablename varchar(128)
-			, @type tinyint
-			, @indexname varchar(128)
+      , @type tinyint
+      , @indexname varchar(128)
 
 DECLARE C CURSOR
     FOR SELECT DISTINCT D.name [SchemaName]
              , C.name [TableName]
-						 , I.[name] [IndexName]
-						 , I.[type]
-						 --, I.index_id, A.data_compression_desc
+             , I.[name] [IndexName]
+             , I.[type]
+ --            , I.index_id, A.data_compression_desc
           FROM sys.objects C WITH (NOLOCK) 
          INNER JOIN sys.partitions A WITH (NOLOCK) ON C.[object_id] = A.[object_id]
          INNER JOIN sys.schemas D WITH (NOLOCK) ON C.[schema_id] = D.[schema_id]
          INNER JOIN sys.database_principals E WITH (NOLOCK) ON D.principal_id = E.principal_id
-				 INNER JOIN sys.indexes I WITH (NOLOCK) ON A.index_id = I.index_id
-				   AND A.object_id = I.object_id
+	 INNER JOIN sys.indexes I WITH (NOLOCK) ON A.index_id = I.index_id
+	   AND A.object_id = I.object_id
          WHERE 1 = 1
-				   AND A.data_compression = 0
+	   AND A.data_compression = 0
            AND C.[type] = 'U'
            AND C.[name] NOT LIKE 'MS%'
-					 AND I.object_id > 1000
-					 AND SCHEMA_NAME(C.schema_id) <> 'SYS' 
+	   AND I.object_id > 1000
+	   AND SCHEMA_NAME(C.schema_id) <> 'SYS' 
          ORDER BY D.name, C.name
 
 OPEN C
