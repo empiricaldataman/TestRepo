@@ -20,7 +20,7 @@
   DISCLAIMER: The AUTHOR  ASSUMES NO RESPONSIBILITY  FOR ANYTHING, including  the destruction of 
               personal property, creating singularities, making deep fried chicken, causing your 
               toilet to  explode, making  your animals spin  around like mad, causing hair loss, 
-			        killing your buzz or ANYTHING else that can be thought up.
+              killing your buzz or ANYTHING else that can be thought up.
 -------------------------------------------------------------------------------------------------*/
 SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
@@ -44,15 +44,15 @@ SELECT database_name,
        
 
 --[ DISPLAY GENERAL INFORMATION FOR LAST SUCCESSFUL BACKUP FOR EACH DATABASE ]
-SELECT @@SERVERNAME [ServerName],
-       A.database_name,
-       msdb.dbo.fn_CreateTimeString(DATEDIFF(s,A.backup_start_date, A.backup_finish_date)) [BackupDuration],
-       STR(CAST(backup_size AS DECIMAL(20,2)) / 1048576 ,10,2) + ' MB' [backup_size],
-       C.physical_device_name,
-       A.backup_finish_date
+SELECT @@SERVERNAME [ServerName]
+     , A.database_name
+     , msdb.dbo.fn_CreateTimeString(DATEDIFF(s,A.backup_start_date, A.backup_finish_date)) [BackupDuration]
+     , STR(CAST(backup_size AS DECIMAL(20,2)) / 1048576 ,10,2) + ' MB' [backup_size]
+     , C.physical_device_name
+     , A.backup_finish_date
   FROM msdb.dbo.backupset A
- INNER JOIN @tbl0 B ON A.database_name = B.database_name AND
-       A.backup_finish_date >= B.backup_finish_date
+ INNER JOIN @tbl0 B ON A.database_name = B.database_name
+   AND A.backup_finish_date >= B.backup_finish_date
  INNER JOIN msdb.dbo.backupMediaFamily C ON A.media_set_id = C.media_set_id
  WHERE [type] = @type
  ORDER BY A.backup_finish_date
