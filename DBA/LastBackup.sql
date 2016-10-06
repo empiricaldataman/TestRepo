@@ -39,9 +39,8 @@ INSERT @tbl0 (database_name, backup_finish_date)
 SELECT database_name,
        MAX(CAST(CONVERT(char(10),backup_finish_date,112) AS SMALLDATETIME)) [backup_finish_date] 
   FROM msdb.dbo.backupset
- WHERE [type] = 'D'
- GROUP BY database_name
-       
+ WHERE [type] = @type
+ GROUP BY database_name       
 
 --[ DISPLAY GENERAL INFORMATION FOR LAST SUCCESSFUL BACKUP FOR EACH DATABASE ]
 SELECT @@SERVERNAME [ServerName]
