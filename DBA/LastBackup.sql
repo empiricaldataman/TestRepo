@@ -63,5 +63,21 @@ SELECT @@SERVERNAME [ServerName],
  WHERE (A.backup_finish_date >= B.backup_finish_date
        OR
        A.backup_finish_date IS NULL)
-ORDER BY D.[name]
+ ORDER BY D.[name]
+ WHERE [type] = @type
+ GROUP BY database_name       
+
+--[ DISPLAY GENERAL INFORMATION FOR LAST SUCCESSFUL BACKUP FOR EACH DATABASE ]
+SELECT @@SERVERNAME [ServerName]
+     , A.database_name
+     , msdb.dbo.fn_CreateTimeString(DATEDIFF(s,A.backup_start_date, A.backup_finish_date)) [BackupDuration]
+     , STR(CAST(backup_size AS DECIMAL(20,2)) / 1048576 ,10,2) + ' MB' [backup_size]
+     , C.physical_device_name
+     , A.backup_finish_date
+  FROM msdb.dbo.backupset A
+ INNER JOIN @tbl0 B ON A.database_name = B.database_name
+   AND A.backup_finish_date >= B.backup_finish_date
+ INNER JOIN msdb.dbo.backupMediaFamily C ON A.media_set_id = C.media_set_id
+ WHERE [type] = @type
+ ORDER BY A.backup_finish_date
 END
