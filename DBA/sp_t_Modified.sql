@@ -38,9 +38,7 @@ SELECT instance_name
      , index_size
      , total_size
   FROM @sp_t
- WHERE table_name IN ('TitleReleaseHistory','rfnd.PaymentRefundHistory','ihToolHistoryMod','ihPendingPaymentHistory','ihPendingDefermentsHistory'
-,'ihExternalDialerRosterHistory','ihExtDDCHistory','HistoryVendorActivity','HistoryTitleRelease','HistoryRemitcoPayments','HistoryPaymentUpdate'
-,'History801Detail','History311Total','History023Maint','AutoIMS_History','AutoIMS_CR_Report_History');
+ WHERE table_name IN ('[TableName]','[TableName]','[TableName]');
 
 GO
 
